@@ -1,9 +1,40 @@
 #include <stdio.h>
+#include <math.h>
+
+typedef struct
+{
+    int type;
+
+    int x;
+    int y;
+
+    int width;
+    int height;
+
+    int radius;
+
+    int size;
+
+    int x2;
+    int y2;
+
+    int active;
+
+} Shape;
 
 #define ROWS 30
 #define COLS 80
 
+#define RECTANGLE 1
+#define LINE 2
+#define TRIANGLE 3
+#define CIRCLE 4
+
 char canvas[ROWS][COLS];
+
+Shape shapes[100];
+
+int count = 0;
 
 void initCanvas()
 {
@@ -70,15 +101,113 @@ void drawLine(int x1,int y1,int x2,int y2)
     }
 }
 
-int main()
+void drawTriangle(int x,int y,int size)
 {
+    int i;
+
+    for(i=0;i<size;i++)
+    {
+        canvas[x+i][y]='*';
+
+        canvas[x+size-1][y+i]='*';
+
+        canvas[x+i][y+i]='*';
+    }
+}
+
+void drawCircle(int cx,int cy,int r)
+{
+    int x,y;
+
+    for(x=0;x<ROWS;x++)
+    {
+        for(y=0;y<COLS;y++)
+        {
+            int value =
+                (x-cx)*(x-cx) +
+                (y-cy)*(y-cy);
+
+            if(abs(value - r*r) <= r)
+            {
+                canvas[x][y]='*';
+            }
+        }
+    }
+}
+
+void addRectangle()
+{
+    Shape s;
+
+    printf("Row: ");
+    scanf("%d",&s.x);
+
+    printf("Column: ");
+    scanf("%d",&s.y);
+
+    printf("Width: ");
+    scanf("%d",&s.width);
+
+    printf("Height: ");
+    scanf("%d",&s.height);
+
+    s.type = RECTANGLE;
+    s.active = 1;
+
+    shapes[count] = s;
+
+    count++;
+}
+
+void redrawAllShapes()
+{
+    int i;
+
     initCanvas();
 
-    drawRectangle(5,10,15,6);
+    for(i=0;i<count;i++)
+    {
+        if(shapes[i].active)
+        {
+            if(shapes[i].type == RECTANGLE)
+            {
+                drawRectangle(
+                    shapes[i].x,
+                    shapes[i].y,
+                    shapes[i].width,
+                    shapes[i].height
+                );
+            }
+        }
+    }
+}
 
-    drawLine(2,5,2,25);
+int main()
+{
+    int choice;
 
-    displayCanvas();
+    while(1)
+    {
+        printf("\n");
+        printf("1. Add Rectangle\n");
+        printf("2. Display\n");
+        printf("3. Exit\n");
 
-    return 0;
+        scanf("%d",&choice);
+
+        switch(choice)
+        {
+            case 1:
+                addRectangle();
+                redrawAllShapes();
+                break;
+
+            case 2:
+                displayCanvas();
+                break;
+
+            case 3:
+                return 0;
+        }
+    }
 }
