@@ -96,7 +96,6 @@ void drawLine(int x1, int y1, int x2, int y2)
     int i;
     if(x1 == x2)
     {
-        // Sort coordinates so loop always moves forward
         int startY = (y1 < y2) ? y1 : y2;
         int endY = (y1 < y2) ? y2 : y1;
         
@@ -110,7 +109,6 @@ void drawLine(int x1, int y1, int x2, int y2)
     }
     else if(y1 == y2)
     {
-        // Sort coordinates so loop always moves forward
         int startX = (x1 < x2) ? x1 : x2;
         int endX = (x1 < x2) ? x2 : x1;
         
@@ -168,6 +166,13 @@ void drawCircle(int cx, int cy, int r)
 
 void addRectangle()
 {
+    // Step 2: Storage Validation Check
+    if(count >= 100)
+    {
+        printf("Shape storage full!\n");
+        return;
+    }
+
     Shape s;
     printf("Row: ");
     scanf("%d", &s.x);
@@ -185,6 +190,13 @@ void addRectangle()
 
 void addCircle()
 {
+    // Step 2: Storage Validation Check
+    if(count >= 100)
+    {
+        printf("Shape storage full!\n");
+        return;
+    }
+
     Shape s;
     printf("Center Row: ");
     scanf("%d", &s.x);
@@ -200,6 +212,13 @@ void addCircle()
 
 void addTriangle()
 {
+    // Step 2: Storage Validation Check
+    if(count >= 100)
+    {
+        printf("Shape storage full!\n");
+        return;
+    }
+
     Shape s;
     printf("Row: ");
     scanf("%d", &s.x);
@@ -215,6 +234,13 @@ void addTriangle()
 
 void addLine()
 {
+    // Step 2: Storage Validation Check
+    if(count >= 100)
+    {
+        printf("Shape storage full!\n");
+        return;
+    }
+
     Shape s;
     printf("Start Row: ");
     scanf("%d", &s.x);
@@ -266,25 +292,60 @@ void redrawAllShapes()
    Shape Management
    ========================== */
 
+// Step 1: Replaced with Enhanced Shape Listing Function
 void listShapes()
 {
     int i;
-    printf("\nStored Shapes\n");
+    int activeCount = 0;
+
+    printf("\n========== Stored Shapes ==========\n");
+
     for(i = 0; i < count; i++)
     {
         if(!shapes[i].active)
             continue;
 
+        activeCount++;
+
         printf("ID %d -> ", i);
+
         switch(shapes[i].type)
         {
-            case RECTANGLE: printf("Rectangle"); break;
-            case CIRCLE:    printf("Circle");    break;
-            case TRIANGLE:  printf("Triangle");  break;
-            case LINE:      printf("Line");      break;
+            case RECTANGLE:
+                printf("Rectangle | Row=%d Col=%d Width=%d Height=%d",
+                       shapes[i].x,
+                       shapes[i].y,
+                       shapes[i].width,
+                       shapes[i].height);
+                break;
+
+            case CIRCLE:
+                printf("Circle | Center=(%d,%d) Radius=%d",
+                       shapes[i].x,
+                       shapes[i].y,
+                       shapes[i].radius);
+                break;
+
+            case TRIANGLE:
+                printf("Triangle | Row=%d Col=%d Size=%d",
+                       shapes[i].x,
+                       shapes[i].y,
+                       shapes[i].size);
+                break;
+
+            case LINE:
+                printf("Line | (%d,%d) -> (%d,%d)",
+                       shapes[i].x,
+                       shapes[i].y,
+                       shapes[i].x2,
+                       shapes[i].y2);
+                break;
         }
+
         printf("\n");
     }
+
+    printf("\nTotal Active Shapes: %d\n", activeCount);
 }
 
 void deleteShape()
@@ -306,36 +367,77 @@ void deleteShape()
     }
 }
 
+// Step 3: Replaced with Full Comprehensive Modification Engine
 void modifyShape()
 {
     int id;
+
     listShapes();
+
     printf("Enter ID to modify: ");
     scanf("%d", &id);
 
-    if(id < 0 || id >= count)
+    if(id < 0 || id >= count || !shapes[id].active)
     {
         printf("Invalid ID\n");
         return;
     }
 
-    if(shapes[id].type == RECTANGLE)
+    switch(shapes[id].type)
     {
-        printf("New Row: ");
-        scanf("%d", &shapes[id].x);
-        printf("New Column: ");
-        scanf("%d", &shapes[id].y);
-        printf("New Width: ");
-        scanf("%d", &shapes[id].width);
-        printf("New Height: ");
-        scanf("%d", &shapes[id].height);
-    }
-    else
-    {
-        printf("Modification currently supported only for rectangles.\n");
+        case RECTANGLE:
+            printf("New Row: ");
+            scanf("%d", &shapes[id].x);
+
+            printf("New Column: ");
+            scanf("%d", &shapes[id].y);
+
+            printf("New Width: ");
+            scanf("%d", &shapes[id].width);
+
+            printf("New Height: ");
+            scanf("%d", &shapes[id].height);
+            break;
+
+        case CIRCLE:
+            printf("New Center Row: ");
+            scanf("%d", &shapes[id].x);
+
+            printf("New Center Column: ");
+            scanf("%d", &shapes[id].y);
+
+            printf("New Radius: ");
+            scanf("%d", &shapes[id].radius);
+            break;
+
+        case TRIANGLE:
+            printf("New Row: ");
+            scanf("%d", &shapes[id].x);
+
+            printf("New Column: ");
+            scanf("%d", &shapes[id].y);
+
+            printf("New Size: ");
+            scanf("%d", &shapes[id].size);
+            break;
+
+        case LINE:
+            printf("New Start Row: ");
+            scanf("%d", &shapes[id].x);
+
+            printf("New Start Column: ");
+            scanf("%d", &shapes[id].y);
+
+            printf("New End Row: ");
+            scanf("%d", &shapes[id].x2);
+
+            printf("New End Column: ");
+            scanf("%d", &shapes[id].y2);
+            break;
     }
 
     redrawAllShapes();
+    printf("Shape modified successfully.\n");
 }
 
 /* ==========================
@@ -346,6 +448,11 @@ int main()
 {
     int choice;
     initCanvas();
+
+    // Step 4: Nice Optional v1.1 Welcome Banner
+    printf("====================================\n");
+    printf("      2D GRAPHICS EDITOR v1.1\n");
+    printf("====================================\n");
 
     while(1)
     {
