@@ -49,14 +49,17 @@ void displayCanvas()
 {
     int i, j;
     printf("\n");
+    printf("----------------------------------------------------------------------------------\n");
     for(i = 0; i < ROWS; i++)
     {
+        printf("|");
         for(j = 0; j < COLS; j++)
         {
             printf("%c", canvas[i][j]);
         }
-        printf("\n");
+        printf("|\n");
     }
+    printf("----------------------------------------------------------------------------------\n");
 }
 
 /* ==========================
@@ -158,6 +161,36 @@ void drawCircle(int cx, int cy, int r)
             }
         }
     }
+}
+
+/* ==========================
+   File Operations
+   ========================== */
+
+void saveCanvasToFile()
+{
+    FILE *fp;
+    int i, j;
+
+    fp = fopen("drawing.txt", "w");
+
+    if(fp == NULL)
+    {
+        printf("Could not create file.\n");
+        return;
+    }
+
+    for(i = 0; i < ROWS; i++)
+    {
+        for(j = 0; j < COLS; j++)
+        {
+            fputc(canvas[i][j], fp);
+        }
+        fputc('\n', fp);
+    }
+
+    fclose(fp);
+    printf("Canvas saved to drawing.txt\n");
 }
 
 /* ==========================
@@ -465,7 +498,8 @@ int main()
         printf("6. List Shapes\n");
         printf("7. Delete Shape\n");
         printf("8. Modify Shape\n");
-        printf("9. Exit\n");
+        printf("9. Save Canvas\n");
+        printf("10. Exit\n");
         printf("Enter choice: ");
 
         if(scanf("%d", &choice) != 1) {
@@ -483,7 +517,8 @@ int main()
             case 6: listShapes();    break;
             case 7: deleteShape();   break;
             case 8: modifyShape();   break;
-            case 9: printf("Exiting...\n"); return 0;
+            case 9: saveCanvasToFile(); break;
+            case 10: printf("Exiting...\n"); return 0;
             default: printf("Invalid choice!\n");
         }
     }
