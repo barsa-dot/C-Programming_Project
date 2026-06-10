@@ -1,0 +1,93 @@
+**Prompt (P):** Explain the requirements of a 2D Graphics Editor project in C.
+
+**Response (Ans):** The GenAI tool explained the project objectives and requirements. It suggested creating a menu-driven application that allows users to draw geometric shapes such as rectangles, circles, triangles, and lines using characters. It also recommended implementing functionalities to add, delete, modify, and display shapes while storing the drawing in a two-dimensional character array.
+
+---
+
+**Prompt (P):** How should I structure the project?
+
+**Response (Ans):** The GenAI tool suggested dividing the project into multiple modules, including canvas management, shape drawing functions, shape storage using structures, user input handling, and display functions. This approach improved code readability, maintainability, and modularity.
+
+---
+
+**Prompt (P):** How can I create a 2D canvas in C?
+
+**Response (Ans):** The GenAI tool recommended using a two-dimensional character array to represent the drawing area. It also provided functions to initialize the canvas with blank spaces and display the contents row by row on the console.
+
+---
+
+**Prompt (P):** Write a function to draw a rectangle.
+
+**Response (Ans):** The GenAI tool generated logic using loops to draw the four boundaries of a rectangle with '*' characters. The function accepted parameters such as row position, column position, width, and height to create rectangles of different sizes.
+
+---
+
+**Prompt (P):** Write a function to draw a circle.
+
+**Response (Ans):** The GenAI tool explained the mathematical equation of a circle and provided an implementation that calculates the distance of each point from the center. Points satisfying the circle equation were marked using '*' characters to create an approximate circular shape.
+
+---
+
+**Prompt (P):** Write a function to draw a triangle.
+
+**Response (Ans):** The GenAI tool provided an algorithm to draw a right-angled triangle by combining vertical, horizontal, and diagonal edges. Loops were used to generate the triangle shape on the canvas.
+
+---
+
+**Prompt (P):** How can I draw a line in the editor?
+
+**Response (Ans):** The GenAI tool suggested implementing horizontal and vertical line drawing functions using coordinate-based loops. The line is created by marking consecutive positions between two user-specified points.
+
+---
+
+**Prompt (P):** How can I store multiple shapes?
+
+**Response (Ans):** The GenAI tool recommended creating a structure named Shape to store shape properties such as coordinates, dimensions, radius, and type. An array of structures was used to manage multiple shapes efficiently.
+
+---
+
+**Prompt (P):** How can I implement shape addition functionality?
+
+**Response (Ans):** The GenAI tool generated menu-driven functions that collect user input for shape parameters and store the corresponding shape information in the structure array. This allowed multiple shapes to be added to the canvas dynamically.
+
+---
+
+**Prompt (P):** How can I delete shapes from the canvas?
+
+**Response (Ans):** The GenAI tool suggested using an active flag within each shape structure. Instead of physically removing data, shapes are marked inactive and ignored during the redraw process.
+
+---
+
+**Prompt (P):** How can I modify existing shapes?
+
+**Response (Ans):** The GenAI tool provided logic to identify shapes using unique IDs and update their attributes such as position, dimensions, radius, or endpoints. The canvas is then redrawn to reflect the modifications.
+
+---
+
+**Prompt (P):** How can I redraw all shapes after modifications?
+
+**Response (Ans):** The GenAI tool recommended clearing the canvas and redrawing all active shapes stored in memory whenever a shape is added, modified, or deleted. This ensures that the displayed drawing always remains consistent.
+
+---
+
+**Prompt (P):** How can I prevent shapes from being drawn outside the canvas?
+
+**Response (Ans):** The GenAI tool suggested implementing boundary checks before accessing array indices. These validations prevent invalid memory access and ensure that shapes remain within the canvas dimensions.
+
+---
+
+**Prompt (P):** How can I save the canvas to a text file?
+
+**Response (Ans):** The GenAI tool provided a file-handling solution using fopen(), fputc(), and fclose(). The canvas contents are written into a text file, allowing users to save their drawings for future reference.
+
+---
+
+**Prompt (P):** Help me debug compilation and runtime errors.
+
+**Response (Ans):** The GenAI tool analyzed compiler error messages, identified syntax and logical issues, suggested corrections, and explained the causes of the errors. This helped in successfully compiling and executing the program.
+
+---
+
+**Prompt (P):** How can I upload my project to GitHub?
+
+**Response (Ans):** The GenAI tool explained the complete Git workflow, including repository creation, Git initialization, committing code changes, pushing to GitHub, and maintaining daily commits as required by the project guidelines.
